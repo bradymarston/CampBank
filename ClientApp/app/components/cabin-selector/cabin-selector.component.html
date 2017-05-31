@@ -1,0 +1,9 @@
+﻿<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Selected Cabin: {{ selectedCabin?.name }}
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li *ngFor="let cabin of cabins" (click)="cabinSelected(cabin)"><a>{{ cabin.name }}</a></li>
+    </ul>
+</div>

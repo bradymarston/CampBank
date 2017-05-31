@@ -11,12 +11,14 @@ import { CabinListComponent } from "./components/cabin-list/cabin-list.component
 import { HttpModule, JsonpModule } from "@angular/http";
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+import { CabinSelectorComponent } from "./components/cabin-selector/cabin-selector.component";
 
 @NgModule({
     bootstrap: [ AppComponent ],
     declarations: [
         AppComponent,
         NavMenuComponent,
+        CabinSelectorComponent,
         CounterComponent,
         FetchDataComponent,
         HomeComponent,
