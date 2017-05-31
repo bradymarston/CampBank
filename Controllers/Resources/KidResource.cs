@@ -14,7 +14,7 @@ namespace CampBank.Controllers.Resources
         public int CabinId { get; set; }
         public CabinResource Cabin { get; set; }
 
-        public static KidResource FromData(Kid data)
+        public static KidResource FromData(Kid data, bool includeRelated = false)
         {
             var resource = new KidResource
             {
@@ -24,7 +24,7 @@ namespace CampBank.Controllers.Resources
                 CabinId = data.CabinId
             };
 
-            if (data.Cabin != null)
+            if (includeRelated)
                 resource.Cabin = CabinResource.FromData(data.Cabin);
 
             return resource;

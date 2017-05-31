@@ -18,7 +18,7 @@ namespace CampBank.Controllers.Resources
             Kids = new Collection<KidResource>();
         }
 
-        public static CabinResource FromData(Cabin data)
+        public static CabinResource FromData(Cabin data, bool includeRelated = false)
         {
             var resource = new CabinResource
             {
@@ -26,7 +26,7 @@ namespace CampBank.Controllers.Resources
                 Name = data.Name
             };
 
-            if (data.Kids != null)
+            if (includeRelated)
             {
                 resource.Kids = data.Kids.Select(k => KidResource.FromData(k)).ToList();
             }

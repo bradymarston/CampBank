@@ -38,6 +38,7 @@ namespace CampBank
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICabinRepository, CabinRepository>();
+            services.AddScoped<IKidRepository, KidRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
