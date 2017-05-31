@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'nav-menu',
@@ -6,4 +7,7 @@ import { Component } from '@angular/core';
     styleUrls: ['./navmenu.component.css']
 })
 export class NavMenuComponent {
+    linkClicked() {
+        console.log($(".navbar-collapse").collapse("toggle"));
+    }
 }
