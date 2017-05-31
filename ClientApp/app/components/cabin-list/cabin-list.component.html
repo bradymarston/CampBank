@@ -1,0 +1,19 @@
+﻿<h1>Setup Cabins <span style="color: darkgreen" class="glyphicon glyphicon-plus-sign clickable" (click)="addCabin()" aria-hidden="true" title="Add Cabin"></span></h1>
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-hover">
+            <tbody>
+                <tr *ngFor="let cabin of cabins">
+                    <td>
+                        <span>{{ cabin.name }}</span>
+                        <span class="pull-right">
+                            <span style="color: darkblue" class="glyphicon glyphicon-edit clickable" (click)="editCabin(cabin.id)" aria-hidden="true" title="Edit"></span>
+                            <span> | </span>
+                            <span style="color: darkred" class="glyphicon glyphicon-trash clickable" (click)="deleteCabin(cabin.id)" aria-hidden="true" title="Delete"></span>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
