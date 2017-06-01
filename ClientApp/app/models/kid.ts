@@ -11,6 +11,5 @@ export interface Kid {
 export interface SaveKid {
     id: number;
     name: string;
-    balance: number;
     cabinId: number;
 }

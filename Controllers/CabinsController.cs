@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CampBank.Controllers
@@ -21,9 +22,9 @@ namespace CampBank.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetCabins()
+        public async Task<ActionResult> GetCabins(bool includeRelated = false)
         {
-            return Ok((await _cabinRepository.GetCabinsAsync()).Select(c => CabinResource.FromData(c)));
+            return Ok((await _cabinRepository.GetCabinsAsync(includeRelated)).Select(c => CabinResource.FromData(c, includeRelated)));
         }
 
         [HttpGet("{id}")]

@@ -4,6 +4,6 @@
         <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <li *ngFor="let cabin of cabins" (click)="cabinSelected(cabin)"><a>{{ cabin.name }}</a></li>
+        <li *ngFor="let cabin of cabins | dummy" (click)="cabinSelected(cabin)"><a>{{ cabin.name }}</a></li>
     </ul>
 </div>

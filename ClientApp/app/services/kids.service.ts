@@ -1,32 +1,36 @@
 ﻿import { Http } from '@angular/http';
 import { Injectable } from "@angular/core";
-import { Cabin, SaveCabin } from "../models/cabin";
+import { Kid, SaveKid } from "../models/kid";
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
 
 @Injectable()
-export class CabinsService {
-    apiUrl = "api/cabins"
+export class KidsService {
+    apiUrl = "api/kids"
 
     constructor(private http: Http) { }
 
-    getCabins(includeRelated = false): Observable<Cabin[]> {
-        return this.http.get(this.apiUrl + "?includeRelated=" + includeRelated)
+    getKids(): Observable<Kid[]> {
+        return this.http.get(this.apiUrl)
             .map(res => res.json());
     }
 
-    getCabin(id: Number) {
+    getKid(id: Number): Observable<Kid> {
         return this.http.get(this.apiUrl + "/" + id)
             .map(res => res.json());
     }
 
-    create(cabin: SaveCabin) {
-        return this.http.post(this.apiUrl, cabin)
+    create(kid: SaveKid) {
+        return this.http.post(this.apiUrl, kid)
             .map(res => res.json());
     }
 
-    update(cabin: SaveCabin) {
-        return this.http.put(this.apiUrl + "/" + cabin.id, cabin);
+    setBalance(id, balance) {
+        return this.http.put(this.apiUrl + "/" + id + "/balance/" + balance, {});
+    }
+
+    update(kid: SaveKid) {
+        return this.http.put(this.apiUrl + "/" + kid.id, kid);
     }
 
     delete(id) {

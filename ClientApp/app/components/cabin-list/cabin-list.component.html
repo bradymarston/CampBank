@@ -1,15 +1,22 @@
-﻿<h1>Setup Cabins <span style="color: darkgreen" class="glyphicon glyphicon-plus-sign clickable" (click)="addCabin()" aria-hidden="true" title="Add Cabin"></span></h1>
+﻿<h1>Setup Cabins
+    <button class="btn-link" (click)="addCabin()" title="Add Cabin">
+        <span style="color: darkgreen" class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+    </button>
+</h1>
 <div class="row">
     <div class="col-md-6">
         <table class="table table-hover">
             <tbody>
-                <tr *ngFor="let cabin of cabins">
+                <tr *ngFor="let cabin of cabins | dummy">
                     <td>
                         <span>{{ cabin.name }}</span>
-                        <span class="pull-right">
-                            <span style="color: darkblue" class="glyphicon glyphicon-edit clickable" (click)="editCabin(cabin.id)" aria-hidden="true" title="Edit"></span>
-                            <span> | </span>
-                            <span style="color: darkred" class="glyphicon glyphicon-trash clickable" (click)="deleteCabin(cabin.id)" aria-hidden="true" title="Delete"></span>
+                        <span class="pull-right" [class.hidden]="cabin.id==0">
+                            <button class="btn-link" (click)="editCabin(cabin)" title="Edit">
+                                <span style="color: darkblue" class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </button>
+                            <button class="btn-link" (click)="deleteCabin(cabin)" title="Delete">
+                                <span style="color: darkred" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
                         </span>
                     </td>
                 </tr>

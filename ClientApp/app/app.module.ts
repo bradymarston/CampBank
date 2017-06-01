@@ -12,6 +12,10 @@ import { HttpModule, JsonpModule } from "@angular/http";
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { CabinSelectorComponent } from "./components/cabin-selector/cabin-selector.component";
+import { KidListComponent } from "./components/kid-list/kid-list.component";
+import { KidsService } from "./services/kids.service";
+import { SortArrayByNamePipe } from "./services/sort-array-by-name.pipe";
+import { DummyPipe } from "./services/dummy.pipe";
 
 @NgModule({
     bootstrap: [ AppComponent ],
@@ -22,7 +26,10 @@ import { CabinSelectorComponent } from "./components/cabin-selector/cabin-select
         CounterComponent,
         FetchDataComponent,
         HomeComponent,
-        CabinListComponent
+        SortArrayByNamePipe,
+        DummyPipe,
+        CabinListComponent,
+        KidListComponent
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
@@ -33,12 +40,14 @@ import { CabinSelectorComponent } from "./components/cabin-selector/cabin-select
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
-            { path: 'cabin-list', component: CabinListComponent },
+            { path: 'cabins', component: CabinListComponent },
+            { path: 'kids', component: KidListComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],
     providers: [
-        CabinsService
+        CabinsService,
+        KidsService
     ]
 })
 export class AppModule {

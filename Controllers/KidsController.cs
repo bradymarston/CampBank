@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace CampBank.Controllers
 {
@@ -53,6 +54,21 @@ namespace CampBank.Controllers
             kidInDb = await _kidRepository.GetKidAsync(kidInDb.Id, includeRelated: true);
 
             return Ok(KidResource.FromData(kidInDb, includeRelated: true));
+        }
+
+        [HttpPut("{id}/balance/{balance}")]
+        public async Task<ActionResult> SetBalance(int id, float balance)
+        {
+            var kidInDb = await _kidRepository.GetKidAsync(id);
+
+            if (kidInDb == null)
+                return NotFound();
+
+            kidInDb.Balance = balance;
+
+            await _unitOfWork.CompleteAsync();
+
+            return Ok();
         }
 
         [HttpPut("{id}")]

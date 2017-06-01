@@ -1,0 +1,47 @@
+﻿<h1>Setup Kids
+    <button class="btn-link" (click)="addKid()">
+        <span style="color: darkgreen" class="glyphicon glyphicon-plus-sign" aria-hidden="true" title="Add Kid"></span>
+    </button>
+</h1>
+
+<cabin-selector [cabins]="cabins" [selectedCabin]="selectedCabin" (selectionChanged)="cabinSelected($event)"></cabin-selector>
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-hover">
+            <tbody>
+                <tr *ngFor="let kid of kids | dummy">
+                    <td>
+                        <span>{{ kid.name }}</span>
+                    </td>
+                    <td>
+                        <span class="pull-right">{{ kid.balance | currency:'USD':true }}</span>
+                    </td>
+                    <td>
+                        <span class="pull-right" [class.hidden]="kid.id==0">
+                            <button class="btn-link" (click)="makeDeposit(kid)" title="Deposit Money">
+                                <span style="color: darkgreen" class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                            </button>
+                            <button class="btn-link" (click)="makeWithdrawl(kid)" title="Withdraw Money">
+                                <span style="color: darkred" class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                            </button>
+                            <span class="dropdown">
+                                <button class="btn-link dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="Change Cabin">
+                                    <span style="color: saddlebrown" class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li *ngFor="let newCabin of cabins | dummy" [class.hidden]="newCabin.id == selectedCabin.id"><a (click)="moveKid(kid, newCabin)">{{ newCabin.name }}</a></li>
+                                </ul>
+                            </span>
+                            <button class="btn-link" (click)="editKid(kid)" title="Edit Name">
+                                <span style="color: darkblue" class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </button>
+                            <button class="btn-link" (click)="deleteKid(kid)" title="Delete">
+                                <span style="color: darkred" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
