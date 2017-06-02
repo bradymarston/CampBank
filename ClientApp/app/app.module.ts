@@ -16,6 +16,7 @@ import { KidListComponent } from "./components/kid-list/kid-list.component";
 import { KidsService } from "./services/kids.service";
 import { SortArrayByNamePipe } from "./services/sort-array-by-name.pipe";
 import { DummyPipe } from "./services/dummy.pipe";
+import { UserService } from "./services/user.service";
 
 @NgModule({
     bootstrap: [ AppComponent ],
@@ -47,7 +48,8 @@ import { DummyPipe } from "./services/dummy.pipe";
     ],
     providers: [
         CabinsService,
-        KidsService
+        KidsService,
+        UserService
     ]
 })
 export class AppModule {

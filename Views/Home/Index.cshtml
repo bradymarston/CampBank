@@ -1,7 +1,13 @@
+@using Microsoft.AspNetCore.Identity;
+@using CampBank.Core.Model
+
+@inject UserManager<ApplicationUser> UserManager
+
 @{
     ViewData["Title"] = "Home Page";
 }
 
+<p class="hidden" id="user-name-paragraph">@UserManager.GetUserName(User)</p>
 <!--<app asp-prerender-module="ClientApp/dist/main-server">Loading...</app>-->
 <app></app>
 
