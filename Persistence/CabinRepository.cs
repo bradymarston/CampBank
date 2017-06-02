@@ -33,7 +33,7 @@ namespace CampBank.Persistence
             if (!includeRelated)
                 return await _context.Cabins.FindAsync(cabinId);
 
-            return await _context.Cabins.Include(c => c.Kids).SingleOrDefaultAsync(c => c.Id == cabinId);
+            return await _context.Cabins.Include(c => c.Kids).ThenInclude(k => k.Transactions).SingleOrDefaultAsync(c => c.Id == cabinId);
         }
 
         public async Task<ICollection<Cabin>> GetCabinsAsync(bool includeRelated = false)
@@ -41,7 +41,7 @@ namespace CampBank.Persistence
             if (!includeRelated)
                 return await _context.Cabins.ToListAsync();
 
-            return await _context.Cabins.Include(c => c.Kids).ToListAsync();
+            return await _context.Cabins.Include(c => c.Kids).ThenInclude(k => k.Transactions).ToListAsync();
         }
 
         public async Task<bool> CabinExistsAsync(int cabinId)

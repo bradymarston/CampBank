@@ -11,5 +11,6 @@ namespace CampBank.Core
         Task<ICollection<Kid>> GetKidsAsync(bool includeRelated = false);
         Task<bool> KidExistsAsync(int kidId);
         void Remove(Kid kidToDelete);
+        void AddTransaction(Kid kid, TransactionType type, float amount, string userName);
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using CampBank.Core.Model;
 
 namespace CampBank.Controllers
 {
@@ -59,12 +60,42 @@ namespace CampBank.Controllers
         [HttpPut("{id}/balance/{balance}")]
         public async Task<ActionResult> SetBalance(int id, float balance)
         {
-            var kidInDb = await _kidRepository.GetKidAsync(id);
+            var kidInDb = await _kidRepository.GetKidAsync(id, includeRelated: true);
 
             if (kidInDb == null)
                 return NotFound();
 
-            kidInDb.Balance = balance;
+            var difference = balance - kidInDb.Balance;
+
+            if (difference == 0)
+                return Ok();
+
+            var newTransaction = new Transaction
+            {
+                Type = difference > 0 ? TransactionType.Deposit : TransactionType.Withdrawl,
+                Amount = difference,
+                KidId = id,
+                Kid = kidInDb,
+                UserName = User.Identity.Name,
+                TimeStamp = DateTime.UtcNow
+            };
+
+            kidInDb.Transactions.Add(newTransaction);
+
+            await _unitOfWork.CompleteAsync();
+
+            return Ok();
+        }
+
+        [HttpPut("{id}/transaction")]
+        public async Task<ActionResult> AddTransaction(int id, [FromBody]SaveTransactionResource transaction)
+        {
+            var kidInDb = await _kidRepository.GetKidAsync(id, includeRelated: true);
+
+            if (kidInDb == null)
+                return NotFound();
+
+            _kidRepository.AddTransaction(kidInDb, transaction.Type, transaction.Amount, User.Identity.Name);
 
             await _unitOfWork.CompleteAsync();
 

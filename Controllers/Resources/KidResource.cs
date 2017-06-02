@@ -13,6 +13,7 @@ namespace CampBank.Controllers.Resources
         public float Balance { get; set; }
         public int CabinId { get; set; }
         public CabinResource Cabin { get; set; }
+        public ICollection<TransactionResource> Transactions { get; set; }
 
         public static KidResource FromData(Kid data, bool includeRelated = false)
         {
@@ -25,7 +26,17 @@ namespace CampBank.Controllers.Resources
             };
 
             if (includeRelated)
+            {
                 resource.Cabin = CabinResource.FromData(data.Cabin);
+                resource.Transactions = data.Transactions.Select(t => new TransactionResource
+                {
+                    Id = t.Id,
+                    Type = t.Type,
+                    Amount = t.Amount,
+                    UserName = t.UserName,
+                    TimeStamp = t.TimeStamp
+                }).ToList();
+            }
 
             return resource;
         }
