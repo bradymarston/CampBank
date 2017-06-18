@@ -28,7 +28,12 @@
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']" (click)="linkClicked()">
-                    <a [routerLink]="['/cabin']">
+                    <a [routerLink]="['/pos']">
+                        <span class='glyphicon glyphicon-usd'></span> Point of Sale
+                    </a>
+                </li>
+                <li [routerLinkActive]="['link-active']" (click)="linkClicked()">
+                    <a [routerLink]="['/cabins']">
                         <span class='glyphicon glyphicon-home'></span> Setup Cabins
                     </a>
                 </li>

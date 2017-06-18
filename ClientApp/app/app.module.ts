@@ -17,6 +17,8 @@ import { KidsService } from "./services/kids.service";
 import { SortArrayByNamePipe } from "./services/sort-array-by-name.pipe";
 import { DummyPipe } from "./services/dummy.pipe";
 import { UserService } from "./services/user.service";
+import { PosComponent } from "./components/pos/pos.component";
+import { TransactionsService } from "./services/transactions.service";
 
 @NgModule({
     bootstrap: [ AppComponent ],
@@ -30,7 +32,8 @@ import { UserService } from "./services/user.service";
         SortArrayByNamePipe,
         DummyPipe,
         CabinListComponent,
-        KidListComponent
+        KidListComponent,
+        PosComponent
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
@@ -43,12 +46,14 @@ import { UserService } from "./services/user.service";
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'cabins', component: CabinListComponent },
             { path: 'kids', component: KidListComponent },
+            { path: 'pos', component: PosComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],
     providers: [
         CabinsService,
         KidsService,
+        TransactionsService,
         UserService
     ]
 })

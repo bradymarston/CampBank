@@ -1,0 +1,24 @@
+﻿<div class="row">
+    <h1>Point of Sale</h1>
+    <cabin-selector [cabins]="cabins" [selectedCabin]="selectedCabin" (selectionChanged)="cabinSelected($event)"></cabin-selector>
+    <hr/>
+    <div class="col-md-6">
+        <div *ngFor="let kid of kids | dummy">
+            <div class="panel panel-default">
+                <div class="panel-heading" (click)="activateKid(kid.id)">
+                    {{ kid.name }}
+                    <span class="pull-right">
+                        {{ kid.balance | currency:'USD':true }}
+                    </span>
+                </div>
+            </div>
+            <div [@collapsable]="isKidActive(kid.id)">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Hello
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

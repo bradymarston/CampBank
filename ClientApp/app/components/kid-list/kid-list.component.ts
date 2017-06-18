@@ -40,7 +40,7 @@ export class KidListComponent implements OnInit {
             .defaultValue("")
             .open().then(dialog => dialog.result.then(result => {
                 if (result) {
-                    var newKid = { id: 0, name: result, balance: 0, cabinId: this.selectedCabin.id, cabin: null }
+                    var newKid = { id: 0, name: result, balance: 0, cabinId: this.selectedCabin.id, cabin: null, transactions: [] }
                     this.kids.push(newKid);
                     this.kidsService.create({ id: newKid.id, name: newKid.name, cabinId: newKid.cabinId }).first().subscribe(
                         res => {
@@ -96,7 +96,7 @@ export class KidListComponent implements OnInit {
         this.modal.prompt()
             .title("Make " + (initial ? "Initial " : "") + "Deposit for " + kid.name)
             .message("Enter deposit amount (without dollar sign):")
-            .defaultValue("0")
+            .defaultValue("")
             .open().then(dialog => dialog.result.then(result => {
                 if (+result != NaN) {
                     var oldBalance = kid.balance;
@@ -116,7 +116,7 @@ export class KidListComponent implements OnInit {
             this.modal.prompt()
                 .title("Make Withdrawl for " + kid.name)
                 .message("Enter withdrawl amount (without dollar sign):")
-                .defaultValue("0")
+                .defaultValue("")
                 .open().then(dialog => dialog.result.then(result => {
                     if (+result != NaN) {
                         var oldBalance = kid.balance;
