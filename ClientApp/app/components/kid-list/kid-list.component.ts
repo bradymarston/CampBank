@@ -4,6 +4,7 @@ import { CabinsService } from "../../services/cabins.service";
 import { Cabin } from "../../models/cabin";
 import { Kid } from "../../models/kid";
 import { Modal } from "angular2-modal/plugins/bootstrap";
+import { ToastyService } from "ng2-toasty";
 
 @Component({
     templateUrl: 'kid-list.component.html',
@@ -17,6 +18,7 @@ export class KidListComponent implements OnInit {
     constructor(
         private kidsService: KidsService,
         private cabinsService: CabinsService,
+        private toastyService: ToastyService,
         private modal: Modal
     ) { }
 
@@ -24,13 +26,22 @@ export class KidListComponent implements OnInit {
         this.cabinsService.getCabins(true).first().subscribe(c => {
             this.cabins = c;
             this.cabinSelected(c[0]);
-        });
+        },
+            () => {
+                this.toastyService.error({
+                    title: "Error",
+                    msg: "Cannot retrieve kids from server.",
+                    theme: "bootstrap",
+                    showClose: true,
+                    timeout: 5000
+                });
+            }
+        );
     }
 
     cabinSelected(cabin: Cabin) {
         this.selectedCabin = cabin;
         this.kids = this.selectedCabin.kids;
-        console.log(this.kids);
     }
 
     addKid() {
@@ -49,6 +60,13 @@ export class KidListComponent implements OnInit {
                             this.makeDeposit(newKid, true);
                         },
                         () => {
+                            this.toastyService.error({
+                                title: "Error",
+                                msg: "Something went wrong on the server trying to add " + newKid.name + ".",
+                                theme: "bootstrap",
+                                showClose: true,
+                                timeout: 5000
+                            });
                             var cabin = this.cabins.find(c => c.id == newKid.cabinId);
                             var index = cabin.kids.findIndex(k => k.id == 0 && k.name == result);
                             cabin.kids.splice(index, 1);
@@ -69,6 +87,13 @@ export class KidListComponent implements OnInit {
                 this.kidsService.update({ id: kid.id, name: result, cabinId: kid.cabinId }).first().subscribe(
                     null,
                     () => {
+                        this.toastyService.error({
+                            title: "Error",
+                            msg: "Something went wrong on the server trying to rename " + oldName + " to " + kid.name + ".",
+                            theme: "bootstrap",
+                            showClose: true,
+                            timeout: 5000
+                        });
                         kid.name = oldName;
                     }
                 )
@@ -85,6 +110,14 @@ export class KidListComponent implements OnInit {
                 this.kidsService.delete(kid.id).first().subscribe(
                     null,
                     () => {
+                        this.toastyService.error({
+                            title: "Error",
+                            msg: "Something went wrong on the server trying to delete " + kid.name + ".",
+                            theme: "bootstrap",
+                            showClose: true,
+                            timeout: 5000
+                        });
+
                         var cabin = this.cabins.find(c => c.id == kid.cabinId);
                         cabin.kids.splice(index, 0, kid);
                     }
@@ -104,6 +137,13 @@ export class KidListComponent implements OnInit {
                     this.kidsService.setBalance(kid.id, kid.balance).first().subscribe(
                         null,
                         () => {
+                            this.toastyService.error({
+                                title: "Error",
+                                msg: "Something went wrong on the server trying to deposit into " + kid.name + "'s account.",
+                                theme: "bootstrap",
+                                showClose: true,
+                                timeout: 5000
+                            });
                             kid.balance = oldBalance;
                         }
                     )
@@ -124,12 +164,29 @@ export class KidListComponent implements OnInit {
                         this.kidsService.setBalance(kid.id, kid.balance).first().subscribe(
                             null,
                             () => {
+                                this.toastyService.error({
+                                    title: "Error",
+                                    msg: "Something went wrong on the server trying to withdraw from " + kid.name + "'s account.",
+                                    theme: "bootstrap",
+                                    showClose: true,
+                                    timeout: 5000
+                                });
                                 kid.balance = oldBalance;
                             }
                         )
                     }
                 }, cancel => cancel));
-        });
+        },
+            () => {
+                this.toastyService.error({
+                    title: "Error",
+                    msg: "Cannot retrieve " + kid.name + "'s updated balance from the server.",
+                    theme: "bootstrap",
+                    showClose: true,
+                    timeout: 5000
+                });
+            }
+        );
     }
 
     moveKid(kid: Kid, newCabin: Cabin) {
@@ -147,6 +204,13 @@ export class KidListComponent implements OnInit {
                 this.kidsService.update({ id: kid.id, name: kid.name, cabinId: kid.cabinId }).first().subscribe(
                     null,
                     () => {
+                        this.toastyService.error({
+                            title: "Error",
+                            msg: "Something went wrong on the server trying to move " + kid.name + " from " + oldCabin.name + " to " + newCabin.name + ".",
+                            theme: "bootstrap",
+                            showClose: true,
+                            timeout: 5000
+                        });
                         var newIndex = newCabin.kids.indexOf(kid);
                         newCabin.kids.splice(newIndex, 1);
                         kid.cabinId = oldCabin.id;

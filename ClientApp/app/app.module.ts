@@ -18,7 +18,11 @@ import { SortArrayByNamePipe } from "./services/sort-array-by-name.pipe";
 import { DummyPipe } from "./services/dummy.pipe";
 import { UserService } from "./services/user.service";
 import { PosComponent } from "./components/pos/pos.component";
+import { ToastyModule } from "ng2-toasty";
 import { TransactionsService } from "./services/transactions.service";
+import { TransactionListComponent } from "./components/transaction-list/transaction-list.component";
+import { SearchComponent } from "./components/search/search.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     bootstrap: [ AppComponent ],
@@ -33,21 +37,23 @@ import { TransactionsService } from "./services/transactions.service";
         DummyPipe,
         CabinListComponent,
         KidListComponent,
-        PosComponent
+        PosComponent,
+        SearchComponent,
+        TransactionListComponent
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
         ModalModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule,
         BootstrapModalModule,
+        ToastyModule.forRoot(),
         RouterModule.forRoot([
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', component: HomeComponent },
-            { path: 'counter', component: CounterComponent },
-            { path: 'fetch-data', component: FetchDataComponent },
+            { path: '', redirectTo: 'pos', pathMatch: 'full' },
             { path: 'cabins', component: CabinListComponent },
             { path: 'kids', component: KidListComponent },
             { path: 'pos', component: PosComponent },
-            { path: '**', redirectTo: 'home' }
+            { path: '**', redirectTo: 'pos' }
         ])
     ],
     providers: [

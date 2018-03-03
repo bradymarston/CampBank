@@ -4,6 +4,7 @@ import { Kid } from "../../models/kid";
 import 'rxjs/add/operator/first';
 import { Cabin } from "../../models/cabin";
 import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { ToastyService } from "ng2-toasty";
 
 @Component({
     templateUrl: './cabin-list.component.html',
@@ -14,10 +15,22 @@ export class CabinListComponent implements OnInit {
 
     constructor(
         private modal: Modal,
-        private cabinsService: CabinsService) { }
+        private cabinsService: CabinsService,
+        private toastyService: ToastyService) { }
 
     ngOnInit() {
-        this.cabinsService.getCabins().first().subscribe(c => this.cabins = c);
+        this.cabinsService.getCabins().first().subscribe(
+            c => this.cabins = c,
+            () => {
+                this.toastyService.error({
+                    title: "Error",
+                    msg: "Cannot retrieve list of cabins from server.",
+                    theme: "bootstrap",
+                    showClose: true,
+                    timeout: 5000
+                });
+            }
+        );
     }
 
     editCabin(cabin: Cabin) {
@@ -31,6 +44,13 @@ export class CabinListComponent implements OnInit {
                 this.cabinsService.update({ id: cabin.id, name: result }).first().subscribe(
                     null,
                     () => {
+                        this.toastyService.error({
+                            title: "Error",
+                            msg: "Something went wrong on the server trying to rename " + oldName + " to " + cabin.name + ".",
+                            theme: "bootstrap",
+                            showClose: true,
+                            timeout: 5000
+                        });
                         cabin.name = oldName;
                     }
                 )
@@ -47,6 +67,13 @@ export class CabinListComponent implements OnInit {
                 this.cabinsService.delete(cabin.id).first().subscribe(
                     null,
                     () => {
+                        this.toastyService.error({
+                            title: "Error",
+                            msg: "Something went wrong on the server trying to delete " + cabin.name + ".",
+                            theme: "bootstrap",
+                            showClose: true,
+                            timeout: 5000
+                        });
                         this.cabins.splice(index, 0, cabin);
                     }
                 )
@@ -65,6 +92,13 @@ export class CabinListComponent implements OnInit {
                     this.cabinsService.create({ id: newCabin.id, name: newCabin.name }).first().subscribe(
                         res => newCabin.id = res.id,
                         () => {
+                            this.toastyService.error({
+                                title: "Error",
+                                msg: "Something went wrong on the server trying to add " + newCabin.name + ".",
+                                theme: "bootstrap",
+                                showClose: true,
+                                timeout: 5000
+                            });
                             var index = this.cabins.findIndex(c => c.id == 0 && c.name == result);
                             this.cabins.splice(index, 1);
                         }

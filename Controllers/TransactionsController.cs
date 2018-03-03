@@ -13,11 +13,13 @@ namespace CampBank.Controllers
     public class TransactionsController : Controller
     {
         private readonly ITransactionRepository _transactionRepository;
+        private readonly IKidRepository _kidRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public TransactionsController(ITransactionRepository transactionRepository, IUnitOfWork unitOfWork)
+        public TransactionsController(ITransactionRepository transactionRepository, IKidRepository kidRepository, IUnitOfWork unitOfWork)
         {
             _transactionRepository = transactionRepository;
+            _kidRepository = kidRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -48,7 +50,7 @@ namespace CampBank.Controllers
             await _transactionRepository.AddAsync(transactionInDb);
 
             await _unitOfWork.CompleteAsync();
-            return Ok(TransactionResource.FromData(transactionInDb, includeRelated: true));
+            return Ok(KidResource.FromData(await _kidRepository.GetKidAsync(newTransaction.KidId, includeRelated: true), includeRelated: true));
         }
 
         [HttpHead("{id}")]

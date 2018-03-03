@@ -1,24 +1,73 @@
 ﻿<div class="row">
-    <h1>Point of Sale</h1>
-    <cabin-selector [cabins]="cabins" [selectedCabin]="selectedCabin" (selectionChanged)="cabinSelected($event)"></cabin-selector>
-    <hr/>
-    <div class="col-md-6">
-        <div *ngFor="let kid of kids | dummy">
-            <div class="panel panel-default">
-                <div class="panel-heading" (click)="activateKid(kid.id)">
-                    {{ kid.name }}
-                    <span class="pull-right">
-                        {{ kid.balance | currency:'USD':true }}
-                    </span>
-                </div>
-            </div>
-            <div [@collapsable]="isKidActive(kid.id)">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        Hello
-                    </div>
-                </div>
-            </div>
+    <div class="col-md-7 col-lg-6">
+        <h1>Point of Sale</h1>
+        <div>
+            <cabin-selector class="pull-left" [cabins]="cabins" [selectedCabin]="selectedCabin" (selectionChanged)="cabinSelected($event)"></cabin-selector>
+            <search class="pull-right" debounceInterval="5" (onChanged)="updateSearch($event)"></search>
         </div>
+        <table class="table table-hover">
+            <tbody>
+                <ng-container *ngFor="let kid of filteredKids | dummy">
+                    <tr>
+                        <td>
+                            {{ kid.name }}
+                        </td>
+                        <td class="text-right" [class.text-danger]="kid.balance < 0">
+                            {{ kid.balance | currency:'USD':true }}
+                        </td>
+                        <td>
+                            <span class="pull-right" [class.hidden]="kid.id==0">
+                                <button class="btn-link" (click)="makePurchase(kid)" title="Make Purchase">
+                                    <span style="color: darkgreen" class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                                </button>
+                                <button [class.hidden]="isKidActive(kid.id)" class="btn-link" (click)="activateKid(kid.id)" title="Show Transactions">
+                                    <span style="color: darkblue" class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                                </button>
+                                <button [class.hidden]="!isKidActive(kid.id)" class="btn-link" (click)="activateKid(kid.id)" title="Hide Transactions">
+                                    <span style="color: darkblue" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                </button>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr *ngIf="isKidActive(kid.id)" style="background: white" >
+                        <td colspan="3">
+                            <div style="margin-left: 10px; margin-right: 10px">
+                                <label>Transactions:</label>
+                                <table class="table table-hover" style="margin: 0px">
+                                    <tbody>
+                                        <tr *ngFor="let t of transactions">
+                                            <td class="text-left" [ngSwitch]="t.type">
+                                                <span *ngSwitchCase="0">Withdrawl</span>
+                                                <span *ngSwitchCase="1">Deposit</span>
+                                                <span *ngSwitchCase="2">Purchase</span>
+                                                <span *ngSwitchCase="3">Correction</span>
+                                                <span *ngSwitchCase="4">Correction</span>
+                                                <span *ngSwitchCase="5">Correction</span>
+                                            </td>
+                                            <td class="text-left">
+                                                {{ t.timeStamp | date:'EEE h:mm a' }}
+                                            </td>
+                                            <td class="text-left">
+                                                {{ t.userName }}
+                                            </td>
+                                            <td class="text-right">
+                                                {{ t.amount | currency:'USD':true }}
+                                            </td>
+                                            <td>
+                                                <span class="pull-right" [class.hidden]="t.id==0">
+                                                    <button class="btn-link" (click)="reverseTransaction(t)" title="Reverse Transaction">
+                                                        <span style="color: darkred" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                                    </button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
     </div>
 </div>

@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Transaction, SaveTransaction } from "../models/transaction";
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
+import { Kid } from "../models/kid";
 
 @Injectable()
 export class TransactionsService {
@@ -20,7 +21,7 @@ export class TransactionsService {
             .map(res => res.json());
     }
 
-    create(transaction: SaveTransaction) {
+    create(transaction: SaveTransaction): Observable<Kid> {
         return this.http.post(this.apiUrl, transaction)
             .map(res => res.json());
     }

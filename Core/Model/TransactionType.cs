@@ -9,6 +9,9 @@ namespace CampBank.Core.Model
     {
         Withdrawl,
         Deposit,
-        Purchase
+        Purchase,
+        WithdrawlCorrection,
+        DepositCorrection,
+        PurchaseCorrection
     }
 }

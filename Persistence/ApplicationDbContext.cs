@@ -16,7 +16,6 @@ namespace CampBank.Persistence
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            
         }
     }
 }
