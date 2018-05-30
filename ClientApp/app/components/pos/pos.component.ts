@@ -92,8 +92,8 @@ export class PosComponent implements OnInit, OnDestroy {
 
     makePurchase(kid: Kid) {
         this.modal.prompt()
-            .title("Purchase")
-            .message("Enter purchase amount (without $):")
+            .title("Purchase for " + kid.name)
+            .message("Enter purchase amount without $: (Current balance: $" + kid.balance.toFixed(2) + ")")
             .defaultValue("")
             .open().then(dialog => dialog.result.then(result => {
                 if (+result != NaN) {
