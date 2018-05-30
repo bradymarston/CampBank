@@ -17,7 +17,6 @@ namespace CampBank.Controllers.Resources
         {
             return new Kid
             {
-                Id = Id,
                 Name = Name,
                 CabinId = CabinId
             };

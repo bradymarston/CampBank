@@ -9,10 +9,6 @@ namespace CampBank.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Balance",
-                table: "Kids");
-
             migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new

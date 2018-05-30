@@ -15,7 +15,6 @@ namespace CampBank.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Balance = table.Column<float>(nullable: false),
                     CabinId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: false)
                 },
