@@ -128,7 +128,7 @@ export class KidListComponent implements OnInit {
     makeDeposit(kid: Kid, initial = false) {
         this.modal.prompt()
             .title("Make " + (initial ? "Initial " : "") + "Deposit for " + kid.name)
-            .message("Enter deposit amount (without dollar sign):")
+            .message("Enter deposit amount without $: (Current balance: $" + kid.balance.toFixed(2) + ")")
             .defaultValue("")
             .open().then(dialog => dialog.result.then(result => {
                 if (+result != NaN) {
@@ -155,7 +155,7 @@ export class KidListComponent implements OnInit {
         this.kidsService.getKid(kid.id).first().subscribe(freshKid => {
             this.modal.prompt()
                 .title("Make Withdrawl for " + kid.name)
-                .message("Enter withdrawl amount (without dollar sign):")
+                .message("Enter withdrawl amount without $: (Current balance: $" + kid.balance.toFixed(2) + ")")
                 .defaultValue("")
                 .open().then(dialog => dialog.result.then(result => {
                     if (+result != NaN) {
