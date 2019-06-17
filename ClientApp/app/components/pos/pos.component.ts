@@ -18,6 +18,10 @@ import { TransactionType } from "../../models/transactionType";
 import { Transaction } from "../../models/transaction";
 import { UserService } from "../../services/user.service";
 import { ToastyService } from "ng2-toasty";
+import { PosModalComponent } from "../pos-modal/pos-modal.component";
+import { overlayConfigFactory } from 'angular2-modal';
+import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
+
 
 @Component({
     templateUrl: 'pos.component.html'
@@ -91,11 +95,8 @@ export class PosComponent implements OnInit, OnDestroy {
     }
 
     makePurchase(kid: Kid) {
-        this.modal.prompt()
-            .title("Purchase for " + kid.name)
-            .message("Enter purchase amount without $: (Current balance: $" + kid.balance.toFixed(2) + ")")
-            .defaultValue("")
-            .open().then(dialog => dialog.result.then(result => {
+        this.modal.open(PosModalComponent, overlayConfigFactory({ kid: kid }, BSModalContext))
+                .then(dialog => dialog.result.then(result => {
                 if (+result != NaN) {
                     kid = this.kids.find(searchKid => searchKid.id == kid.id);
                     kid.balance -= +result;

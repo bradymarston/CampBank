@@ -23,6 +23,7 @@ import { TransactionsService } from "./services/transactions.service";
 import { TransactionListComponent } from "./components/transaction-list/transaction-list.component";
 import { SearchComponent } from "./components/search/search.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { PosModalComponent } from './components/pos-modal/pos-modal.component';
 
 @NgModule({
     bootstrap: [ AppComponent ],
@@ -39,7 +40,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
         KidListComponent,
         PosComponent,
         SearchComponent,
-        TransactionListComponent
+        TransactionListComponent,
+        PosModalComponent
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
@@ -61,7 +63,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
         KidsService,
         TransactionsService,
         UserService
-    ]
+    ],
+    entryComponents: [PosModalComponent]
 })
 export class AppModule {
 }

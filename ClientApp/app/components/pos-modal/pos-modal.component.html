@@ -1,0 +1,59 @@
+﻿
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">
+                Purchase for {{ kid.name }}
+            </h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                Available balance: ${{ kid.balance | number:'1.2-2'}}
+            </p>
+            <div style="min-height: 75px">
+                <span class="h3">
+                    ${{ total | number:'1.2-2'}}
+                </span>
+                <span *ngFor="let addend of this.addends">
+                    <button class="btn btn-default" (click)="removeAddend(addend.id)">
+                        <span style="color: darkred" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        <span *ngIf="addend.amount >= 1">${{ addend.amount | number:'1.2-2'}}</span>
+                        <span *ngIf="addend.amount < 1">{{ addend.amount * 100 }}¢</span>
+                    </button> </span>
+            </div>
+            <p></p>
+            <div>
+                <button class="btn btn-default" (click)="addAddend(.1)">
+                    <span style="color: darkgreen" class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    10¢
+                </button>
+                <button class="btn btn-default" (click)="addAddend(.25)">
+                    <span style="color: darkgreen" class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    25¢
+                </button>
+                <button class="btn btn-default" (click)="addAddend(.5)">
+                    <span style="color: darkgreen" class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    50¢
+                </button>
+                <button class="btn btn-default" (click)="addAddend(.75)">
+                    <span style="color: darkgreen" class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    75¢
+                </button>
+                <button class="btn btn-default" (click)="addAddend(1)">
+                    <span style="color: darkgreen" class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    $1
+                </button>
+                <button class="btn btn-default" (click)="addAddend(1.25)">
+                    <span style="color: darkgreen" class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    $1.25
+                </button>
+                <button class="btn btn-default" (click)="addAddend(1.5)">
+                    <span style="color: darkgreen" class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    $1.50
+                </button>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" (click)="submit()">OK</button>
+            <button class="btn btn-default" (click)="cancel()">Cancel</button>
+        </div>
+    </div>
