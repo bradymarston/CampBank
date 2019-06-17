@@ -46,6 +46,11 @@ namespace CampBank
 
             services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Login");
 
+            services.Configure<IISOptions>(options =>
+            {
+                options.AutomaticAuthentication = false;
+            });
+
             // Add framework services.
             services.AddMvc();
 
