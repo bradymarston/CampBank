@@ -45,7 +45,7 @@ namespace CampBank.Controllers
         {
             var transactionInDb = newTransaction.ToData();
             transactionInDb.UserName = User.Identity.Name;
-            transactionInDb.TimeStamp = DateTime.UtcNow;
+            transactionInDb.TimeStamp = DateTime.Now;
 
             await _transactionRepository.AddAsync(transactionInDb);
 

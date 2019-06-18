@@ -77,7 +77,7 @@ namespace CampBank.Controllers
                 KidId = id,
                 Kid = kidInDb,
                 UserName = User.Identity.Name,
-                TimeStamp = DateTime.UtcNow
+                TimeStamp = DateTime.Now
             };
 
             kidInDb.Transactions.Add(newTransaction);

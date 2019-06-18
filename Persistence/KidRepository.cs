@@ -36,7 +36,7 @@ namespace CampBank.Persistence
                 KidId = kid.Id,
                 Kid = kid,
                 UserName = userName,
-                TimeStamp = DateTime.UtcNow
+                TimeStamp = DateTime.Now
             };
 
             kid.Transactions.Add(newTransaction);
